@@ -13,13 +13,29 @@ export const searchCities = async (term) => {
 };
 
 export const getWeatherByCity = async (cityURL) => {
-  try {
-    const response = await (await fetch(`http://api.weatherapi.com/v1/current.json?lang=pt&key=${TOKEN}&q=${cityURL}`)).json();
+  const url = `http://api.weatherapi.com/v1/current.json?lang=pt&key=${TOKEN}&q=${cityURL}`;
 
-    const { temp_c: temp, condition, current: { icon } } = response;
+  const resposta = await fetch(url);
+  const info = await resposta.json();
 
-    return { temp, condition: condition.text, icon };
-  } catch (error) {
-    window.alert('Error');
+  if (Array.isArray(info)) {
+    const { location, current } = data[0];
+    const { name, country } = location;
+    return {
+      name,
+      country,
+      temp: current.temp_c,
+      condition: current.condition.text,
+      icon: current.condition.icon,
+    };
   }
+  const { location, current } = info;
+  const { name, country } = location;
+  return {
+    name,
+    country,
+    temp: current.temp_c,
+    condition: current.condition.text,
+    icon: current.condition.icon,
+  };
 };
