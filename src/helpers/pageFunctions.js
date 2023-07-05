@@ -126,11 +126,13 @@ export function handleSearch(event) {
       return Promise.all(weatherPromises);
     })
     .then((weatherDataArray) => {
+      const citiesContainer = document.getElementById('cities');
       weatherDataArray.forEach((weatherData) => {
-        console.log(weatherData);
+        const cityElement = createCityElement(weatherData);
+        citiesContainer.appendChild(cityElement);
       });
     })
     .catch((error) => {
-      console.log('Error:', error);
+      window.alert('Error:', error);
     });
 }
