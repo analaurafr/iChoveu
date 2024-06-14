@@ -1,6 +1,0 @@
-{
-  "extends": "@trybe/eslint-config-frontend",
-  "rules": {
-    "no-alert": "off"
-  }
-}
